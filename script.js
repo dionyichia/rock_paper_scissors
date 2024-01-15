@@ -23,76 +23,101 @@ function getComputerChoice () {
 }
 
 
-function playRound (playerSelection, computerSelection) {
+function playRound (playerSelection) {
+    let outcome = 0;
+    let playerScore = document.querySelector("#player");
+    let compScore = document.querySelector("#computer");
+    let computerScore = parseInt(compScore.textContent);
+    let userScore = parseInt(playerScore.textContent);
+
+
+    //Get computer input
+    computerSelection = getComputerChoice();
+
     //compare the input from the user and the random output of the computer
     if (playerSelection == computerSelection) {
-        return 2
+        outcome = 2
     }
     else if (playerSelection == "Rock") {
         if (computerSelection == "Paper") {
-            return 0;
+            outcome = 0;
         }
         else {
-            return 1;
+            outcome = 1;
         }
     }
     else if (playerSelection == "Scissors") {
         if (computerSelection == "Rock") {
-            return 0;
+            outcome = 0;
         }
         else {
-            return 1;
+            outcome = 1;
         }
     }
     else {
         if (computerSelection == "Scissors") {
-            return 0;
+            outcome = 0;
         }
         else {
-            return 1;
+            outcome = 1;
         }
     }
-}
 
-function game() {
-    //counter to count number of times games has been run
-    let computerScore = 0;
-    let userScore = 0;
-    let input = "";
+    //compare player selection to computer chioce.
+    let computer = getComputerChoice();
+    console.log(computer);
 
-    for (let counter = 0; counter < 5; counter++) {
-        //prompt the user for an input
-        do {
-            input = prompt("Rock, Paper or Scissors?");
-            console.log(input);
-
-        } while (input != "Rock" && input != "Paper" && input != "Scissors")
-        console.log(1);
-        //loop to run getComp and playRound 5 times
-        let computer = getComputerChoice();
-        console.log(computer);
-        let score = playRound(input, computer); 
-        if (score == 0) {
-            alert(`You Lose! ${computer} beats ${input}!`);
-            computerScore++;
-        }
-        else if (score == 1){
-            alert(`You Win! ${input} beats ${computer}!`);
-            userScore++;
-        }
-        else {
-            alert(`Its a tie! Try again!`);
-            counter--;
-        }
-        console.log (`counter : ${counter}`);
+    if (outcome == 0) {
+        alert(`You Lose! ${computer} beats ${playerSelection}!`);
+        computerScore++;
     }
-    console.log (`userScore : ${userScore}`);
-    console.log (`computerScore : ${computerScore}`); 
-
-    if (computerScore > userScore) {
-        alert("You Lost... :/");
+    else if (outcome == 1){
+        alert(`You Win! ${playerSelection} beats ${computer}!`);
+        userScore++;
     }
     else {
-        alert ("You Won!");
+        alert(`Its a tie! Try again!`);
     }
+
+    //update score on the display
+    playerScore.textContent = `${userScore}`;
+    compScore.textContent = `${computerScore}`; 
+}
+
+function game() { 
+    let playerScore = document.querySelector("#player");
+    let compScore = document.querySelector("#computer");
+    let computerScore = parseInt(compScore.textContent);
+    let userScore = parseInt(playerScore.textContent);
+
+    //change to check if usersccore and comp score = 5
+    if (computerScore + userScore >= 5) {
+        if (computerScore > userScore) {
+            compScore.textContent = 0;
+            playerScore.textContent = 0;
+            alert("You Lost... :/");
+        }
+        else {
+            compScore.textContent = 0;
+            playerScore.textContent = 0;
+            alert ("You Won!");
+        }
+    }
+    /*
+    let rock = document.querySelector('.rock');
+    let paper =  document.querySelector('.paper');
+    let scissors = document.querySelector('.scissors');
+    rock.addEventListener('click', function() {
+        input = "Rock";
+        return input;
+    });
+    paper.addEventListener('click', function() {
+        input = "Paper";
+        return input;
+    });
+    scissors.addEventListener('click', function() {
+        input = "Scissors";
+        return input;
+    });
+    */
 }
